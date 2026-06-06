@@ -1,0 +1,42 @@
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <span class="brand-text">ServiceDesk</span>
+  </div>
+
+  <ul class="sidebar-nav">
+    <li class="nav-item">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Dashboard</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/tickets" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
+        <span class="nav-icon">🎫</span>
+        <span class="nav-label">All Tickets</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/tickets/my-tickets" routerLinkActive="active" class="nav-link">
+        <span class="nav-icon">📋</span>
+        <span class="nav-label">My Tickets</span>
+      </a>
+    </li>
+
+    <li class="nav-item" *ngIf="currentUser?.role === UserRole.Admin || currentUser?.role === UserRole.Technician">
+      <a routerLink="/tickets/assigned" routerLinkActive="active" class="nav-link">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Assigned to Me</span>
+      </a>
+    </li>
+
+    <li class="nav-item" *ngIf="currentUser?.role === UserRole.Admin">
+      <a routerLink="/admin" routerLinkActive="active" class="nav-link">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Admin</span>
+      </a>
+    </li>
+  </ul>
+</nav>

@@ -1,27 +1,66 @@
-# ServicedeskLegacy
+# ServiceDesk Legacy — Angular 15 Training Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.11.
+A deliberately legacy Angular 15 application for enterprise training. Trainees modernize
+this codebase over a 5-day course (migrate to standalone, add interceptors, optimize
+change detection, add tests).
 
-## Development server
+## Prerequisites
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Node 18** (required — Angular 15 does not support Node 20+)
+- nvm-windows installed (see SETUP.md for details)
 
-## Code scaffolding
+## Quick Start
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```powershell
+# 1. Switch to Node 18
+nvm use 18
+node -v   # must show v18.x
+
+# 2. Install dependencies
+npm install
+
+# 3. Point at the ServiceDesk API
+#    Edit src/environments/environment.ts and set apiUrl to your hosted API:
+#    apiUrl: 'https://your-api-host.com/api'
+
+# 4. Start the dev server
+ng serve
+
+# 5. Open http://localhost:4200 — you will be redirected to /auth/login
+```
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```powershell
+ng build
+```
 
-## Running unit tests
+Build artifacts are written to `dist/servicedesk-legacy/`.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Project Structure
 
-## Running end-to-end tests
+```
+src/app/
+  core/       CoreModule — singleton services, guards, models, constants
+  shared/     SharedModule — presentational components, pipes
+  layout/     LayoutModule — MainLayout (sidebar+header), AuthLayout
+  features/   Lazy-loaded feature modules: auth, dashboard, tickets, admin
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## API Configuration
 
-## Further help
+The app consumes a .NET ServiceDesk API. All endpoints are defined in
+`src/app/core/constants/api-endpoints.ts`. The base URL is set in
+`src/environments/environment.ts`:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'https://your-api-host.com/api'   // <-- set this
+};
+```
+
+## Training Notes
+
+This codebase contains intentional legacy patterns. See `LEGACY-AUDIT.md` for the full
+list, grouped by the training day that addresses each one.

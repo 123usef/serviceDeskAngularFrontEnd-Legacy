@@ -1,0 +1,38 @@
+<app-page-header title="User Management"></app-page-header>
+
+<div class="table-wrapper" *ngIf="users.length > 0">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Current Role</th>
+        <th>Change Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ getRoleLabel(user.role) }}</td>
+        <td>
+          <select
+            class="form-control"
+            [ngModel]="user.role"
+            (ngModelChange)="onRoleChange(user, $event)"
+          >
+            <option *ngFor="let opt of roleOptions" [ngValue]="opt.value">{{ opt.label }}</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="pagination" *ngIf="users.length > 0">
+  <button class="btn btn-secondary" [disabled]="currentPage <= 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+  <span class="page-info">Page {{ currentPage }}</span>
+  <button class="btn btn-secondary" [disabled]="users.length < pageSize" (click)="onPageChange(currentPage + 1)">Next</button>
+</div>
+
+<app-empty-state *ngIf="users.length === 0" message="No users found"></app-empty-state>

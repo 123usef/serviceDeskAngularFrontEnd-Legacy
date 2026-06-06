@@ -1,0 +1,13 @@
+<div class="comment-form">
+  <textarea
+    class="form-control"
+    rows="3"
+    placeholder="Add a comment..."
+    [(ngModel)]="content"
+  ></textarea>
+  <button
+    class="btn btn-primary"
+    [disabled]="!content.trim()"
+    (click)="onSubmit()"
+  >Add Comment</button>
+</div>

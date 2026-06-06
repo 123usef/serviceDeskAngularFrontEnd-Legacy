@@ -1,0 +1,12 @@
+<header class="app-header">
+  <div class="header-left">
+    <span class="header-title">ServiceDesk</span>
+  </div>
+
+  <div class="header-right">
+    <span class="user-name" *ngIf="currentUser$ | async as user">
+      {{ user.fullName }}
+    </span>
+    <button class="btn-logout" (click)="logout()">Logout</button>
+  </div>
+</header>

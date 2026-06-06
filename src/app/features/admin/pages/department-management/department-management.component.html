@@ -1,0 +1,56 @@
+<app-page-header title="Department Management"></app-page-header>
+
+<div class="actions-bar">
+  <button class="btn btn-primary" (click)="openCreateForm()">+ New Department</button>
+</div>
+
+<!-- Inline Form -->
+<div class="form-card" *ngIf="showForm">
+  <h3 class="form-title">{{ editingDepartment ? 'Edit Department' : 'New Department' }}</h3>
+
+  <div class="form-group">
+    <label>Name *</label>
+    <input type="text" class="form-control" [(ngModel)]="formName" placeholder="Department name" />
+  </div>
+
+  <div class="form-group">
+    <label>Arabic Name *</label>
+    <input type="text" class="form-control" [(ngModel)]="formNameAr" placeholder="اسم القسم" dir="rtl" />
+  </div>
+
+  <div class="form-group">
+    <label>Description</label>
+    <input type="text" class="form-control" [(ngModel)]="formDescription" placeholder="Optional description" />
+  </div>
+
+  <div class="form-actions">
+    <button class="btn btn-secondary" (click)="cancelForm()">Cancel</button>
+    <button class="btn btn-primary" (click)="onSave()">{{ editingDepartment ? 'Update' : 'Create' }}</button>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="table-wrapper" *ngIf="departments.length > 0">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Arabic Name</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dept of departments">
+        <td>{{ dept.name }}</td>
+        <td dir="rtl">{{ dept.nameAr }}</td>
+        <td>{{ dept.description || '—' }}</td>
+        <td>
+          <button class="btn btn-sm" (click)="openEditForm(dept)">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-empty-state *ngIf="departments.length === 0 && !showForm" message="No departments yet"></app-empty-state>

@@ -1,0 +1,8 @@
+<app-page-header title="Create Ticket"></app-page-header>
+
+<div class="create-card">
+  <app-ticket-form
+    (formSubmit)="onSubmit($event)"
+    (formCancel)="onCancel()"
+  ></app-ticket-form>
+</div>

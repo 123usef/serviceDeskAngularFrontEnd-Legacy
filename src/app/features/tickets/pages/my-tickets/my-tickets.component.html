@@ -1,0 +1,44 @@
+<app-page-header title="My Tickets"></app-page-header>
+
+<div class="page-actions">
+  <a routerLink="/tickets/create" class="btn btn-primary">+ New Ticket</a>
+</div>
+
+<div class="ticket-table-wrapper" *ngIf="tickets.length > 0">
+  <table class="ticket-table">
+    <thead>
+      <tr>
+        <th>Ref #</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Assigned To</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets" class="ticket-row" (click)="onRowClick(ticket)">
+        <td class="ref-number">{{ ticket.referenceNumber }}</td>
+        <td>{{ ticket.title }}</td>
+        <td>{{ ticket.categoryName }}</td>
+        <td><app-status-badge [value]="ticket.status" type="status"></app-status-badge></td>
+        <td><app-status-badge [value]="ticket.priority" type="priority"></app-status-badge></td>
+        <td>{{ ticket.assignedToName || '—' }}</td>
+        <td>{{ ticket.createdAt | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="pagination" *ngIf="tickets.length > 0">
+  <button class="btn btn-secondary" [disabled]="currentPage <= 1" (click)="onPageChange(currentPage - 1)">Previous</button>
+  <span class="page-info">Page {{ currentPage }}</span>
+  <button class="btn btn-secondary" [disabled]="tickets.length < pageSize" (click)="onPageChange(currentPage + 1)">Next</button>
+</div>
+
+<app-empty-state
+  *ngIf="tickets.length === 0"
+  message="You haven't created any tickets yet"
+  icon="📋"
+></app-empty-state>

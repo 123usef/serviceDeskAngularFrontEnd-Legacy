@@ -1,0 +1,155 @@
+<div *ngIf="ticket">
+  <div class="detail-header">
+    <div class="detail-header-left">
+      <button class="btn btn-secondary" (click)="goBack()">← Back</button>
+      <h1 class="detail-title">{{ ticket.referenceNumber }} — {{ ticket.title }}</h1>
+    </div>
+    <div class="detail-header-right">
+      <button
+        *ngIf="isAdmin"
+        class="btn btn-danger"
+        (click)="onDeleteTicket()"
+      >Delete Ticket</button>
+    </div>
+  </div>
+
+  <div class="detail-grid">
+    <!-- Left column: ticket info -->
+    <div class="detail-main">
+      <div class="card">
+        <h2 class="card-title">Ticket Details</h2>
+
+        <div class="field-grid">
+          <div class="field">
+            <span class="field-label">Status</span>
+            <app-status-badge [value]="ticket.status" type="status"></app-status-badge>
+          </div>
+          <div class="field">
+            <span class="field-label">Priority</span>
+            <app-status-badge [value]="ticket.priority" type="priority"></app-status-badge>
+          </div>
+          <div class="field">
+            <span class="field-label">Category</span>
+            <span class="field-value">{{ ticket.categoryName }}</span>
+          </div>
+          <div class="field">
+            <span class="field-label">Department</span>
+            <span class="field-value">{{ ticket.departmentName }}</span>
+          </div>
+          <div class="field">
+            <span class="field-label">Created By</span>
+            <span class="field-value">{{ ticket.createdByName }}</span>
+          </div>
+          <div class="field">
+            <span class="field-label">Assigned To</span>
+            <span class="field-value">{{ ticket.assignedToName || 'Unassigned' }}</span>
+          </div>
+          <div class="field">
+            <span class="field-label">Created</span>
+            <span class="field-value">{{ ticket.createdAt | date:'medium' }}</span>
+          </div>
+          <div class="field">
+            <span class="field-label">Updated</span>
+            <span class="field-value">{{ ticket.updatedAt | date:'medium' }}</span>
+          </div>
+          <div class="field" *ngIf="ticket.resolvedAt">
+            <span class="field-label">Resolved</span>
+            <span class="field-value">{{ ticket.resolvedAt | date:'medium' }}</span>
+          </div>
+          <div class="field" *ngIf="ticket.closedAt">
+            <span class="field-label">Closed</span>
+            <span class="field-value">{{ ticket.closedAt | date:'medium' }}</span>
+          </div>
+        </div>
+
+        <div class="description-section">
+          <span class="field-label">Description</span>
+          <p class="description-text">{{ ticket.description }}</p>
+        </div>
+
+        <div class="description-section" *ngIf="ticket.resolutionNotes">
+          <span class="field-label">Resolution Notes</span>
+          <p class="description-text">{{ ticket.resolutionNotes }}</p>
+        </div>
+      </div>
+
+      <!-- Comments Section -->
+      <div class="card">
+        <h2 class="card-title">Comments ({{ comments.length }})</h2>
+
+        <div class="comment-list">
+          <div *ngIf="comments.length === 0" class="no-comments">No comments yet.</div>
+
+          <div *ngFor="let comment of comments" class="comment-item">
+            <div class="comment-header">
+              <span class="comment-author">{{ comment.createdByName }}</span>
+              <span class="comment-date">{{ comment.createdAt | date:'medium' }}</span>
+              <button
+                *ngIf="canDeleteComment(comment)"
+                class="btn-delete-comment"
+                (click)="onDeleteComment(comment.id)"
+              >Delete</button>
+            </div>
+            <p class="comment-body">{{ comment.content }}</p>
+          </div>
+        </div>
+
+        <div class="comment-form">
+          <textarea
+            class="form-control"
+            rows="3"
+            placeholder="Add a comment..."
+            [(ngModel)]="newComment"
+          ></textarea>
+          <button
+            class="btn btn-primary"
+            [disabled]="!newComment.trim()"
+            (click)="onAddComment()"
+          >Add Comment</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: actions -->
+    <div class="detail-sidebar">
+      <!-- Status Change -->
+      <div class="card" *ngIf="availableStatuses.length > 0">
+        <h2 class="card-title">Change Status</h2>
+        <select class="form-control" [(ngModel)]="selectedStatus">
+          <option [ngValue]="null">Select status...</option>
+          <option *ngFor="let s of availableStatuses" [ngValue]="s.value">{{ s.label }}</option>
+        </select>
+
+        <div *ngIf="showResolutionNotes" class="resolution-notes">
+          <label class="field-label">Resolution Notes</label>
+          <textarea
+            class="form-control"
+            rows="3"
+            placeholder="Describe how this was resolved..."
+            [(ngModel)]="resolutionNotes"
+          ></textarea>
+        </div>
+
+        <button
+          class="btn btn-primary btn-block"
+          [disabled]="selectedStatus === null"
+          (click)="onChangeStatus()"
+        >Update Status</button>
+      </div>
+
+      <!-- Assign -->
+      <div class="card" *ngIf="isAdminOrTechnician">
+        <h2 class="card-title">Assign Ticket</h2>
+        <select class="form-control" [(ngModel)]="selectedTechnicianId">
+          <option [ngValue]="null">Select technician...</option>
+          <option *ngFor="let tech of technicians" [ngValue]="tech.id">{{ tech.fullName }}</option>
+        </select>
+        <button
+          class="btn btn-primary btn-block"
+          [disabled]="!selectedTechnicianId"
+          (click)="onAssign()"
+        >Assign</button>
+      </div>
+    </div>
+  </div>
+</div>

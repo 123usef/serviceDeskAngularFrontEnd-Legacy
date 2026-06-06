@@ -1,0 +1,72 @@
+<app-page-header title="All Tickets"></app-page-header>
+
+<div class="filter-bar">
+  <div class="filter-group">
+    <input
+      type="text"
+      class="form-control filter-search"
+      placeholder="Search tickets..."
+      [(ngModel)]="filterSearch"
+      (ngModelChange)="onFilterChange()"
+    />
+
+    <select class="form-control" [(ngModel)]="filterStatus" (ngModelChange)="onFilterChange()">
+      <option [ngValue]="null">All Statuses</option>
+      <option [ngValue]="0">Open</option>
+      <option [ngValue]="1">In Progress</option>
+      <option [ngValue]="2">Resolved</option>
+      <option [ngValue]="3">Closed</option>
+      <option [ngValue]="4">Rejected</option>
+    </select>
+
+    <select class="form-control" [(ngModel)]="filterPriority" (ngModelChange)="onFilterChange()">
+      <option [ngValue]="null">All Priorities</option>
+      <option [ngValue]="0">Low</option>
+      <option [ngValue]="1">Medium</option>
+      <option [ngValue]="2">High</option>
+      <option [ngValue]="3">Critical</option>
+    </select>
+
+    <select class="form-control" [(ngModel)]="filterCategoryId" (ngModelChange)="onFilterChange()">
+      <option [ngValue]="null">All Categories</option>
+      <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
+    </select>
+
+    <button class="btn btn-secondary" (click)="clearFilters()">Clear</button>
+  </div>
+
+  <a routerLink="/tickets/create" class="btn btn-primary">+ New Ticket</a>
+</div>
+
+<div class="ticket-table-wrapper" *ngIf="tickets.length > 0">
+  <table class="ticket-table">
+    <thead>
+      <tr>
+        <th>Ref #</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Created By</th>
+        <th>Assigned To</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets" class="ticket-row" (click)="onRowClick(ticket)">
+        <td class="ref-number">{{ ticket.referenceNumber }}</td>
+        <td>{{ ticket.title }}</td>
+        <td>{{ ticket.categoryName }}</td>
+        <td><app-status-badge [value]="ticket.status" type="status"></app-status-badge></td>
+        <td><app-status-badge [value]="ticket.priority" type="priority"></app-status-badge></td>
+        <td>{{ ticket.createdByName }}</td>
+        <td>{{ ticket.assignedToName || '—' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-empty-state
+  *ngIf="tickets.length === 0"
+  message="No tickets found"
+  icon="🎫"
+></app-empty-state>

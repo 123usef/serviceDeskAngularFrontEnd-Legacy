@@ -1,0 +1,58 @@
+.recent-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 16px;
+}
+
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 13px;
+  }
+
+  th {
+    font-weight: 600;
+    color: #6b7280;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  td {
+    border-bottom: 1px solid #f3f4f6;
+    color: #1f2937;
+  }
+}
+
+.ticket-row {
+  cursor: pointer;
+  &:hover { background-color: #f9fafb; }
+}
+
+.ref-number {
+  font-family: monospace;
+  font-weight: 600;
+  color: #1a73e8;
+}
+
+.view-all {
+  text-align: center;
+  padding-top: 12px;
+
+  a {
+    font-size: 13px;
+    color: #1a73e8;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+}

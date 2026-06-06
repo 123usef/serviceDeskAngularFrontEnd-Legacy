@@ -1,0 +1,34 @@
+<div class="recent-card">
+  <h2 class="section-title">Recent Tickets</h2>
+
+  <table class="ticket-table" *ngIf="tickets.length > 0">
+    <thead>
+      <tr>
+        <th>Ref #</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets" class="ticket-row" (click)="onRowClick(ticket)">
+        <td class="ref-number">{{ ticket.referenceNumber }}</td>
+        <td>{{ ticket.title }}</td>
+        <td><app-status-badge [value]="ticket.status" type="status"></app-status-badge></td>
+        <td><app-status-badge [value]="ticket.priority" type="priority"></app-status-badge></td>
+        <td>{{ ticket.createdAt | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <app-empty-state
+    *ngIf="tickets.length === 0"
+    message="No recent tickets"
+    icon="📊"
+  ></app-empty-state>
+
+  <div class="view-all" *ngIf="tickets.length > 0">
+    <a routerLink="/tickets">View all tickets →</a>
+  </div>
+</div>

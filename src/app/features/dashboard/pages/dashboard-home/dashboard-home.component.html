@@ -1,0 +1,14 @@
+<app-page-header title="Dashboard"></app-page-header>
+
+<div class="stats-grid" *ngIf="statCards.length > 0">
+  <app-stats-card
+    *ngFor="let card of statCards"
+    [title]="card.title"
+    [value]="card.value"
+    [color]="card.color"
+  ></app-stats-card>
+</div>
+
+<div class="recent-section">
+  <app-recent-tickets [tickets]="recentTickets"></app-recent-tickets>
+</div>

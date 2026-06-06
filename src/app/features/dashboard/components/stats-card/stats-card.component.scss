@@ -1,0 +1,33 @@
+.stats-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stats-indicator {
+  width: 4px;
+  height: 40px;
+  border-radius: 2px;
+}
+
+.stats-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.stats-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.stats-title {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 2px;
+}
