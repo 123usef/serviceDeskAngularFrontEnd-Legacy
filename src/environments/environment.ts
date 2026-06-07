@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://REPLACE-ME/api'
+  apiUrl: "http://servicedesk.runasp.net/api",
 };
