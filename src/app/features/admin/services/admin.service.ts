@@ -44,7 +44,7 @@ export class AdminService {
       { headers: this.getAuthHeaders(), params }
     ).pipe(
       map(response => {
-        if (!response.isSuccess) {
+        if (!response.success) {
           throw new Error(response.message);
         }
         return response.data;
@@ -64,7 +64,7 @@ export class AdminService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       map(response => {
-        if (!response.isSuccess) {
+        if (!response.success) {
           throw new Error(response.message);
         }
         return response.data;
@@ -86,7 +86,7 @@ export class AdminService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       map(response => {
-        if (!response.isSuccess) {
+        if (!response.success) {
           throw new Error(response.message);
         }
         return response.data;
@@ -107,7 +107,7 @@ export class AdminService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       map(response => {
-        if (!response.isSuccess) {
+        if (!response.success) {
           throw new Error(response.message);
         }
         return response.data;
@@ -129,7 +129,7 @@ export class AdminService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       map(response => {
-        if (!response.isSuccess) {
+        if (!response.success) {
           throw new Error(response.message);
         }
         return response.data;
@@ -150,7 +150,7 @@ export class AdminService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       map(response => {
-        if (!response.isSuccess) {
+        if (!response.success) {
           throw new Error(response.message);
         }
         return response.data;

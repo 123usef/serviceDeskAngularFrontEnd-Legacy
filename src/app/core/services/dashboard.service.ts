@@ -33,7 +33,7 @@ export class DashboardService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       map(response => {
-        if (!response.isSuccess) {
+        if (!response.success) {
           throw new Error(response.message);
         }
         return response.data;
